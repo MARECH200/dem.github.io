@@ -13,11 +13,11 @@ font-style: italic;
 }
 
 @font-face {
-font-family: sans-serif;
+font-family: "Pudelinka";
 src: url("Fonts/pudelinka.ttf" ) format("truetype");
 font-weight: normal;
 font-style: normal;
 }
  p.quote {
- font-family: "Pudelinka",
+ font-family: "Pudelinka";
 }  
