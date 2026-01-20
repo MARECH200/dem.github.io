@@ -81,3 +81,82 @@
 <p>Рекомендую интересный сайт друга: <a href="https://sosopeppa.github.io/pastila/">Перейти на сайт</a></p>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Мой блог — RSA-ключи</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #333;
+      background-color: #f9f9f9;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    pre {
+      background: #eee;
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Мой блог</h1>
+    <p>Записи о криптографии, математике и программировании</p>
+  </header>
+
+  <main>
+    <article>
+      <h2>Генерация RSA-ключей — учебное задание</h2>
+      <p><em>Опубликовано: 20 января 2026 г.</em></p>
+
+      <p>Сегодня разберём простой пример генерации ключей для алгоритма RSA с использованием небольших простых чисел.</p>
+
+      <h3>Шаги:</h3>
+      <ol>
+        <li>Выбираем простые числа: \( p = 5 \), \( q = 7 \)</li>
+        <li>Вычисляем \( n = p \cdot q = 35 \)</li>
+        <li>Вычисляем функцию Эйлера: \( \varphi(n) = (p-1)(q-1) = 24 \)</li>
+        <li>Выбираем открытую экспоненту \( e = 5 \) (взаимно простое с 24)</li>
+        <li>Находим закрытый ключ \( d \), такой что \( (e \cdot d) \bmod \varphi(n) = 1 \). Получаем \( d = 5 \).</li>
+      </ol>
+
+      <p><strong>Результат:</strong></p>
+      <ul>
+        <li>Открытый ключ: <code>(n, e) = (35, 5)</code></li>
+        <li>Закрытый ключ: <code>(n, d) = (35, 5)</code></li>
+      </ul>
+
+      <p>Это учебный пример — в реальных системах используются гораздо большие простые числа.</p>
+
+      <h3>Код (псевдокод для проверки):</h3>
+      <pre>
+p = 5
+q = 7
+n = p * q               # 35
+phi = (p-1)*(q-1)       # 24
+e = 5                   # gcd(5, 24) == 1
+d = 5                   # (5*5) % 24 == 1
+      </pre>
+    </article>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Анцупов. Все права защищены.</p>
+  </footer>
+</body>
+</html>
