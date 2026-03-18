@@ -131,19 +131,3 @@ Labrador Retriever: 11.79%
     </table>
 </body>
     
-import plotly.graph_objects as go
-import plotly.express as px
-
-# Интерактивный график
-fig = px.line(students, x='Часы подготовки', y='Прогноз баллов', 
-              markers=True, 
-              title='Зависимость прогнозируемых баллов от часов подготовки',
-              labels={'Часы подготовки': 'Часы подготовки', 
-                      'Прогноз баллов': 'Прогноз баллов'})
-
-fig.update_traces(line=dict(width=3, color='#2E86AB'),
-                  marker=dict(size=12, color='#A23B72'))
-
-# Сохранение в HTML
-fig.write_html('regression_interactive.html')
-fig.show()
