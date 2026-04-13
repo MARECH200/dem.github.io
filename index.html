@@ -166,3 +166,67 @@ Labrador Retriever: 11.79%
 
    <p>Текущая дата: 7 апреля 2026 г.</p> 
 ![Описание](blob:https://app.diagrams.net/b5e3b8cd-fac7-4a52-99e9-a007b0166c07.jpg)
+  <p>Текущая дата: 13 апреля 2026 г.</p> 
+    from datetime import date
+
+class Department:
+    def __init__(self, name="Стоматологическое отделение"):
+        self.name = name
+        self.doctors = []
+        self.nurses = []
+        self.operations = []
+
+    def add_doctor(self, doctor):
+        self.doctors.append(doctor)
+
+    def add_nurse(self, nurse):
+        self.nurses.append(nurse)
+
+    def add_operation(self, operation):
+        self.operations.append(operation)
+
+
+class Doctor:
+    def __init__(self, full_name, city=None, age=None, employee_id=None, phone=None, birth_date=None, blood_group=None):
+        self.full_name = full_name
+        self.city = city
+        self.age = age
+        self.employee_id = employee_id
+        self.phone = phone
+        self.birth_date = birth_date
+        self.blood_group = blood_group
+
+    def __repr__(self):
+        if self.city:
+            return f"Doctor({self.full_name}, City: {self.city})"
+        else:
+            return f"Doctor({self.full_name}, ID: {self.employee_id})"
+
+
+class Nurse:
+    def __init__(self, full_name, city=None, phone_or_code=None, employee_id=None, phone=None, birth_date=None, blood_group=None):
+        self.full_name = full_name
+        self.city = city
+        self.phone_or_code = phone_or_code  # Для второго варианта
+        self.employee_id = employee_id
+        self.phone = phone
+        self.birth_date = birth_date
+        self.blood_group = blood_group
+
+    def __repr__(self):
+        if self.city:
+            return f"Nurse({self.full_name}, City: {self.city})"
+        else:
+            return f"Nurse({self.full_name}, ID: {self.employee_id})"
+
+
+class Operation:
+    def __init__(self, diagnosis, date_performed, procedure, symptoms, medication):
+        self.diagnosis = diagnosis
+        self.date_performed = date_performed
+        self.procedure = procedure
+        self.symptoms = symptoms
+        self.medication = medication
+
+    def __repr__(self):
+        return f"Operation({self.diagnosis}, {self.date_performed})"
