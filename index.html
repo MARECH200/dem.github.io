@@ -167,66 +167,61 @@ Labrador Retriever: 11.79%
    <p>Текущая дата: 7 апреля 2026 г.</p> 
 ![Описание](blob:https://app.diagrams.net/b5e3b8cd-fac7-4a52-99e9-a007b0166c07.jpg)
   <p>Текущая дата: 13 апреля 2026 г.</p> 
-    from datetime import date
+  import json
+from models import Department, Doctor, Nurse, Operation
+from datetime import datetime
 
-class Department:
-    def __init__(self, name="Стоматологическое отделение"):
-        self.name = name
-        self.doctors = []
-        self.nurses = []
-        self.operations = []
+def load_data_from_json(filepath='data_v2.json'):
+    with open(filepath, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    return data['department']
 
-    def add_doctor(self, doctor):
-        self.doctors.append(doctor)
+def create_objects_from_data_v2(data):
+    dept = Department(data['name'])
 
-    def add_nurse(self, nurse):
-        self.nurses.append(nurse)
+    for doc_data in data['doctors']:
+        doc = Doctor(
+            full_name=doc_data['full_name'],
+            city=doc_data.get('city'),
+            age=doc_data.get('age'),
+            birth_date=datetime.strptime(doc_data['birth_date'], '%Y-%m-%d').date() if doc_data.get('birth_date') else None,
+            blood_group=doc_data.get('blood_group')
+        )
+        dept.add_doctor(doc)
 
-    def add_operation(self, operation):
-        self.operations.append(operation)
+    for nurse_data in data['nurses']:
+        nurse = Nurse(
+            full_name=nurse_data['full_name'],
+            city=nurse_data.get('city'),
+            phone_or_code=nurse_data.get('phone_or_code'),
+            birth_date=datetime.strptime(nurse_data['birth_date'], '%Y-%m-%d').date() if nurse_data.get('birth_date') else None,
+            blood_group=nurse_data.get('blood_group')
+        )
+        dept.add_nurse(nurse)
 
+    for op_data in data['operations']:
+        op = Operation(
+            diagnosis=op_data['diagnosis'],
+            date_performed=datetime.strptime(op_data['date_performed'], '%Y-%m-%d').date(),
+            procedure=op_data['procedure'],
+            symptoms=op_data['symptoms'],
+            medication=op_data['medication']
+        )
+        dept.add_operation(op)
 
-class Doctor:
-    def __init__(self, full_name, city=None, age=None, employee_id=None, phone=None, birth_date=None, blood_group=None):
-        self.full_name = full_name
-        self.city = city
-        self.age = age
-        self.employee_id = employee_id
-        self.phone = phone
-        self.birth_date = birth_date
-        self.blood_group = blood_group
+    return dept
 
-    def __repr__(self):
-        if self.city:
-            return f"Doctor({self.full_name}, City: {self.city})"
-        else:
-            return f"Doctor({self.full_name}, ID: {self.employee_id})"
+if __name__ == '__main__':
+    raw_data = load_data_from_json()
+    clinic = create_objects_from_data_v2(raw_data)
 
+    print("=== Стоматологическое отделение (v2) ===")
+    print(f"Врачи: {clinic.doctors}")
+    print(f"Медсёстры: {clinic.nurses}")
+    print(f"Операции: {clinic.operations}")
 
-class Nurse:
-    def __init__(self, full_name, city=None, phone_or_code=None, employee_id=None, phone=None, birth_date=None, blood_group=None):
-        self.full_name = full_name
-        self.city = city
-        self.phone_or_code = phone_or_code  # Для второго варианта
-        self.employee_id = employee_id
-        self.phone = phone
-        self.birth_date = birth_date
-        self.blood_group = blood_group
-
-    def __repr__(self):
-        if self.city:
-            return f"Nurse({self.full_name}, City: {self.city})"
-        else:
-            return f"Nurse({self.full_name}, ID: {self.employee_id})"
-
-
-class Operation:
-    def __init__(self, diagnosis, date_performed, procedure, symptoms, medication):
-        self.diagnosis = diagnosis
-        self.date_performed = date_performed
-        self.procedure = procedure
-        self.symptoms = symptoms
-        self.medication = medication
-
-    def __repr__(self):
-        return f"Operation({self.diagnosis}, {self.date_performed})"
+    if clinic.operations:
+        op = clinic.operations[0]
+        print(f"\nПоследняя операция: {op.diagnosis} ({op.date_performed})")
+        print(f"Процедура: {op.procedure}")
+        print(f"Лекарство: {op.medication}")
